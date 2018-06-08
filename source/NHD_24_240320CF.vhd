@@ -50,7 +50,7 @@ component NHD_24_240320CF_Init is
         o_write_start   : out STD_LOGIC;                        -- write start signal for driver
         o_dc            : out STD_LOGIC;                        -- data/command for driver
         o_db            : out STD_LOGIC_VECTOR (15 downto 0);   -- 16 bit data bus for driver
-        o_rs            : out STD_LOGIC;                        -- tft reset
+        o_rs_tft        : out STD_LOGIC;                        -- tft reset
         o_ready         : out STD_LOGIC                         -- init sequence completed
     );
 end component;
@@ -109,7 +109,7 @@ begin
         o_write_start   => ws_init,
         o_dc            => dc_init,
         o_db            => db_init,
-        o_rs            => o_rs,
+        o_rs_tft        => o_rs,
         o_ready         => ready_init
     );
 

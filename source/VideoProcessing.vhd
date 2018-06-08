@@ -36,6 +36,14 @@ signal last_vde   : STD_LOGIC := '0';
 begin
 
 	video_processing: process(i_pxl_clock)
+	
+	-- horizontal start of the 320x240 area to grab
+	-- max value = 1920 - 320 = 1600 (for 1920 x 1080 resolution)
+	constant h_start  : integer range 0 to 1600 := 0; 
+	
+	-- vertical start of the 320x240 area to grab
+    -- max value = 1080 - 240 = 840 (for 1920 x 1080 resolution)
+	constant v_start  : integer range 0 to  840 := 0;
 
 	variable h_count  : integer range 0 to 1920 := 0;
     variable v_count  : integer range 0 to 1080 := 0;
@@ -94,10 +102,10 @@ begin
             end if;
 
 		    -- if the pixel data is within the tft bounds, store it in block ram
-		    if curr_col < 320 and curr_row < 240 then
+		    if curr_col >= h_start and curr_col < (h_start+320) and curr_row >= v_start and curr_row < (v_start + 240) then
 		    
 	            -- calculate the block ram index address
-	            ram_address := curr_row * 320 + curr_col;    
+	            ram_address := (curr_row - v_start) * 320 + (curr_col - h_start);    
 	                   
 	            bram_addra <= conv_std_logic_vector(ram_address, bram_addra'length);
                 bram_dina <= i_rgb;

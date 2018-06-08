@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0xACBAB4BAE139BF68" bd:device="xc7z020clg400-1" bd:synthFlowMode="Hierarchical" bd:tool_version="2018.1" bd:top="Main" bd:version="1.00.a">
+<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0xCC4860368FFFAD9" bd:device="xc7z020clg400-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2018.1" bd:top="Main" bd:version="1.00.a">
 
   <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
     <spirit:vendor>xilinx.com</spirit:vendor>
@@ -26,10 +26,39 @@
         <spirit:abstractionType spirit:library="interface" spirit:name="tmds_rtl" spirit:vendor="digilentinc.com" spirit:version="1.0"/>
       </spirit:busInterface>
       <spirit:busInterface>
-        <spirit:name>i2c</spirit:name>
+        <spirit:name>ddc</spirit:name>
         <spirit:master/>
         <spirit:busType spirit:library="interface" spirit:name="iic" spirit:vendor="xilinx.com" spirit:version="1.0"/>
         <spirit:abstractionType spirit:library="interface" spirit:name="iic_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+      </spirit:busInterface>
+      <spirit:busInterface>
+        <spirit:name>RST.I_RESET</spirit:name>
+        <spirit:displayName>Reset</spirit:displayName>
+        <spirit:description>Reset</spirit:description>
+        <spirit:busType spirit:library="signal" spirit:name="reset" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:abstractionType spirit:library="signal" spirit:name="reset_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:slave/>
+        <spirit:portMaps>
+          <spirit:portMap>
+            <spirit:logicalPort>
+              <spirit:name>RST</spirit:name>
+            </spirit:logicalPort>
+            <spirit:physicalPort>
+              <spirit:name>i_reset</spirit:name>
+            </spirit:physicalPort>
+          </spirit:portMap>
+        </spirit:portMaps>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>POLARITY</spirit:name>
+            <spirit:value>ACTIVE_HIGH</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="user"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
+          </spirit:parameter>
+        </spirit:parameters>
       </spirit:busInterface>
       <spirit:busInterface>
         <spirit:name>CLK.SYS_CLOCK</spirit:name>
@@ -52,31 +81,31 @@
           <spirit:parameter>
             <spirit:name>FREQ_HZ</spirit:name>
             <spirit:value>125000000</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="user"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>PHASE</spirit:name>
             <spirit:value>0.000</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="user"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
+          </spirit:parameter>
+          <spirit:parameter>
+            <spirit:name>CLK_DOMAIN</spirit:name>
+            <spirit:value>Main_sys_clock</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="default"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
           </spirit:parameter>
         </spirit:parameters>
-      </spirit:busInterface>
-      <spirit:busInterface>
-        <spirit:name>RST.I_RESET</spirit:name>
-        <spirit:displayName>Reset</spirit:displayName>
-        <spirit:description>Reset</spirit:description>
-        <spirit:busType spirit:library="signal" spirit:name="reset" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-        <spirit:abstractionType spirit:library="signal" spirit:name="reset_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-        <spirit:slave/>
-        <spirit:portMaps>
-          <spirit:portMap>
-            <spirit:logicalPort>
-              <spirit:name>RST</spirit:name>
-            </spirit:logicalPort>
-            <spirit:physicalPort>
-              <spirit:name>i_reset</spirit:name>
-            </spirit:physicalPort>
-          </spirit:portMap>
-        </spirit:portMaps>
-        <spirit:parameters/>
       </spirit:busInterface>
     </spirit:busInterfaces>
     <spirit:model>
@@ -89,24 +118,6 @@
       </spirit:views>
       <spirit:ports>
         <spirit:port>
-          <spirit:name>sys_clock</spirit:name>
-          <spirit:wire>
-            <spirit:direction>in</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>o_wr</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>o_dc</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
           <spirit:name>o_db</spirit:name>
           <spirit:wire>
             <spirit:direction>out</spirit:direction>
@@ -117,9 +128,27 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
+          <spirit:name>o_dc</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
           <spirit:name>o_rs</spirit:name>
           <spirit:wire>
             <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>o_wr</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>i_reset</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
           </spirit:wire>
         </spirit:port>
         <spirit:port>
@@ -135,7 +164,7 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>i_reset</spirit:name>
+          <spirit:name>sys_clock</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
           </spirit:wire>
@@ -151,8 +180,43 @@
     <spirit:version>1.00.a</spirit:version>
     <spirit:componentInstances>
       <spirit:componentInstance>
+        <spirit:instanceName>blk_mem_gen_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="ip" spirit:name="blk_mem_gen" spirit:vendor="xilinx.com" spirit:version="8.4"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">Main_blk_mem_gen_0_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Memory_Type">Simple_Dual_Port_RAM</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Enable_32bit_Address">false</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Use_Byte_Write_Enable">false</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Assume_Synchronous_Clk">false</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Write_Width_A">24</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Write_Depth_A">76800</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Operating_Mode_A">NO_CHANGE</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Enable_A">Always_Enabled</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Write_Width_B">24</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Read_Width_B">24</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Enable_B">Always_Enabled</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Register_PortB_Output_of_Memory_Primitives">false</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Port_B_Clock">100</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="Port_B_Enable_Rate">100</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="use_bram_block">Stand_Alone</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>clk_wiz_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="ip" spirit:name="clk_wiz" spirit:vendor="xilinx.com" spirit:version="6.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">Main_clk_wiz_0_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="CLKOUT1_REQUESTED_OUT_FREQ">200.000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="MMCM_DIVCLK_DIVIDE">1</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="MMCM_CLKOUT0_DIVIDE_F">5.000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="USE_BOARD_FLOW">true</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="CLK_IN1_BOARD_INTERFACE">sys_clock</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="CLKOUT1_JITTER">109.241</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+      <spirit:componentInstance>
         <spirit:instanceName>dvi2rgb_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="ip" spirit:name="dvi2rgb" spirit:vendor="digilentinc.com" spirit:version="1.8"/>
+        <spirit:componentRef spirit:library="ip" spirit:name="dvi2rgb" spirit:vendor="digilentinc.com" spirit:version="1.9"/>
         <spirit:configurableElementValues>
           <spirit:configurableElementValue spirit:referenceId="bd:xciName">Main_dvi2rgb_0_0</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="kEmulateDDC">true</spirit:configurableElementValue>
@@ -170,41 +234,6 @@
           <spirit:configurableElementValue spirit:referenceId="bd:xciName">Main_rgb2dvi_0_0</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="kClkPrimitive">MMCM</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="kClkRange">1</spirit:configurableElementValue>
-        </spirit:configurableElementValues>
-      </spirit:componentInstance>
-      <spirit:componentInstance>
-        <spirit:instanceName>clk_wiz_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="ip" spirit:name="clk_wiz" spirit:vendor="xilinx.com" spirit:version="6.0"/>
-        <spirit:configurableElementValues>
-          <spirit:configurableElementValue spirit:referenceId="bd:xciName">Main_clk_wiz_0_0</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="CLKOUT1_REQUESTED_OUT_FREQ">200.000</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="MMCM_DIVCLK_DIVIDE">1</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="MMCM_CLKOUT0_DIVIDE_F">5.000</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="USE_BOARD_FLOW">true</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="CLK_IN1_BOARD_INTERFACE">sys_clock</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="CLKOUT1_JITTER">109.241</spirit:configurableElementValue>
-        </spirit:configurableElementValues>
-      </spirit:componentInstance>
-      <spirit:componentInstance>
-        <spirit:instanceName>blk_mem_gen_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="ip" spirit:name="blk_mem_gen" spirit:vendor="xilinx.com" spirit:version="8.4"/>
-        <spirit:configurableElementValues>
-          <spirit:configurableElementValue spirit:referenceId="bd:xciName">Main_blk_mem_gen_0_1</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Memory_Type">Simple_Dual_Port_RAM</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Enable_32bit_Address">false</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Use_Byte_Write_Enable">false</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Assume_Synchronous_Clk">false</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Write_Width_A">24</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Write_Depth_A">76800</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Operating_Mode_A">NO_CHANGE</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Enable_A">Always_Enabled</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Write_Width_B">24</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Read_Width_B">24</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Enable_B">Always_Enabled</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Register_PortB_Output_of_Memory_Primitives">false</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Port_B_Clock">100</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="Port_B_Enable_Rate">100</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="use_bram_block">Stand_Alone</spirit:configurableElementValue>
         </spirit:configurableElementValues>
       </spirit:componentInstance>
       <spirit:componentInstance>
@@ -233,40 +262,29 @@
     <spirit:interconnections/>
     <spirit:adHocConnections>
       <spirit:adHocConnection>
-        <spirit:name>dvi2rgb_0_vid_pData</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="vid_pData"/>
-        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="vid_pData"/>
-        <spirit:internalPortReference spirit:componentRef="VideoProcessing_0" spirit:portRef="i_rgb"/>
+        <spirit:name>NHD_24_240320CF_0_bram_addrb</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="bram_addrb"/>
+        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="addrb"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>dvi2rgb_0_vid_pHSync</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="vid_pHSync"/>
-        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="vid_pHSync"/>
-        <spirit:internalPortReference spirit:componentRef="VideoProcessing_0" spirit:portRef="i_h_sync"/>
+        <spirit:name>NHD_24_240320CF_0_o_db</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="o_db"/>
+        <spirit:externalPortReference spirit:portRef="o_db"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>dvi2rgb_0_vid_pVSync</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="vid_pVSync"/>
-        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="vid_pVSync"/>
-        <spirit:internalPortReference spirit:componentRef="VideoProcessing_0" spirit:portRef="i_v_sync"/>
+        <spirit:name>NHD_24_240320CF_0_o_dc</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="o_dc"/>
+        <spirit:externalPortReference spirit:portRef="o_dc"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>dvi2rgb_0_vid_pVDE</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="vid_pVDE"/>
-        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="vid_pVDE"/>
-        <spirit:internalPortReference spirit:componentRef="VideoProcessing_0" spirit:portRef="i_vde"/>
+        <spirit:name>NHD_24_240320CF_0_o_rs</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="o_rs"/>
+        <spirit:externalPortReference spirit:portRef="o_rs"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>clk_wiz_0_clk_out1</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="clk_wiz_0" spirit:portRef="clk_out1"/>
-        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="RefClk"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>sys_clock_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="sys_clock"/>
-        <spirit:internalPortReference spirit:componentRef="clk_wiz_0" spirit:portRef="clk_in1"/>
-        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="clkb"/>
-        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="sys_clock"/>
+        <spirit:name>NHD_24_240320CF_0_o_wr</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="o_wr"/>
+        <spirit:externalPortReference spirit:portRef="o_wr"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>VideoProcessing_0_bram_addra</spirit:name>
@@ -284,34 +302,53 @@
         <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="wea"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>NHD_24_240320CF_0_o_wr</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="o_wr"/>
-        <spirit:externalPortReference spirit:portRef="o_wr"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>NHD_24_240320CF_0_o_dc</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="o_dc"/>
-        <spirit:externalPortReference spirit:portRef="o_dc"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>NHD_24_240320CF_0_o_db</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="o_db"/>
-        <spirit:externalPortReference spirit:portRef="o_db"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>NHD_24_240320CF_0_o_rs</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="o_rs"/>
-        <spirit:externalPortReference spirit:portRef="o_rs"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>blk_mem_gen_0_doutb</spirit:name>
         <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="doutb"/>
         <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="bram_doutb"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>NHD_24_240320CF_0_bram_addrb</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="bram_addrb"/>
-        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="addrb"/>
+        <spirit:name>clk_wiz_0_clk_out1</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="clk_wiz_0" spirit:portRef="clk_out1"/>
+        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="RefClk"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>dvi2rgb_0_PixelClk</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="PixelClk"/>
+        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="clka"/>
+        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="PixelClk"/>
+        <spirit:internalPortReference spirit:componentRef="VideoProcessing_0" spirit:portRef="i_pxl_clock"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>dvi2rgb_0_vid_pData</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="vid_pData"/>
+        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="vid_pData"/>
+        <spirit:internalPortReference spirit:componentRef="VideoProcessing_0" spirit:portRef="i_rgb"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>dvi2rgb_0_vid_pHSync</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="vid_pHSync"/>
+        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="vid_pHSync"/>
+        <spirit:internalPortReference spirit:componentRef="VideoProcessing_0" spirit:portRef="i_h_sync"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>dvi2rgb_0_vid_pVDE</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="vid_pVDE"/>
+        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="vid_pVDE"/>
+        <spirit:internalPortReference spirit:componentRef="VideoProcessing_0" spirit:portRef="i_vde"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>dvi2rgb_0_vid_pVSync</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="vid_pVSync"/>
+        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="vid_pVSync"/>
+        <spirit:internalPortReference spirit:componentRef="VideoProcessing_0" spirit:portRef="i_v_sync"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>i_reset_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="i_reset"/>
+        <spirit:internalPortReference spirit:componentRef="clk_wiz_0" spirit:portRef="reset"/>
+        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="aRst"/>
+        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="aRst"/>
+        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="i_reset"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>i_resolution_0_1</spirit:name>
@@ -324,16 +361,11 @@
         <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="i_rgb_test"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>i_reset_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="i_reset"/>
-        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="i_reset"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>dvi2rgb_0_PixelClk</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="PixelClk"/>
-        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="PixelClk"/>
-        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="clka"/>
-        <spirit:internalPortReference spirit:componentRef="VideoProcessing_0" spirit:portRef="i_pxl_clock"/>
+        <spirit:name>sys_clock_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="sys_clock"/>
+        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="clkb"/>
+        <spirit:internalPortReference spirit:componentRef="clk_wiz_0" spirit:portRef="clk_in1"/>
+        <spirit:internalPortReference spirit:componentRef="NHD_24_240320CF_0" spirit:portRef="sys_clock"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
     <spirit:hierConnections>
@@ -343,7 +375,7 @@
       <spirit:hierConnection spirit:interfaceRef="hdmi_tx/rgb2dvi_0_TMDS">
         <spirit:activeInterface spirit:busRef="TMDS" spirit:componentRef="rgb2dvi_0"/>
       </spirit:hierConnection>
-      <spirit:hierConnection spirit:interfaceRef="i2c/dvi2rgb_0_DDC">
+      <spirit:hierConnection spirit:interfaceRef="ddc/dvi2rgb_0_DDC">
         <spirit:activeInterface spirit:busRef="DDC" spirit:componentRef="dvi2rgb_0"/>
       </spirit:hierConnection>
     </spirit:hierConnections>

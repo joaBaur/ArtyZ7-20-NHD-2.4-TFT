@@ -144,4 +144,6 @@ when switched on, only every other pixel is written to the block ram, so an area
 ***SW1 can be used for testing the driver functionality without an HDMI signal***  
 when switched off, a full screen red-green-blue sequence is shown on the tft
 
+## Offsetting the TFT display area
 
+The 320x240 pixel area that is output to the TFT has its origin by default at the upper left corner (0/0) of the HDMI frame. If you want to move the area to some other location within the HDMI frame, you can change the values of the constants `h_start` and `v_start` in the VideoProcessing.vhd file at line numbers 42 and 46 respectively.

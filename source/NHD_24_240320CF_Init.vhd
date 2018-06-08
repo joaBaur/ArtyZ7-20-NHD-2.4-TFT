@@ -19,7 +19,7 @@ entity NHD_24_240320CF_Init is
         o_write_start   : out STD_LOGIC;                        -- write start signal for driver
         o_dc	        : out STD_LOGIC;                        -- data/command for driver
         o_db	        : out STD_LOGIC_VECTOR (15 downto 0);   -- 16 bit data bus for driver
-        o_rs            : out STD_LOGIC;                        -- tft reset wire
+        o_rs_tft        : out STD_LOGIC;                        -- tft reset wire
 
         o_ready         : out STD_LOGIC                         -- init sequence completed
     );
@@ -738,7 +738,7 @@ begin
     o_write_start   <= ws_reg;
     o_dc            <= dc_reg;
     o_db            <= db_reg;
-    o_rs            <= rs_reg; 
+    o_rs_tft        <= rs_reg; 
 
     o_ready         <= ready_reg;
 
